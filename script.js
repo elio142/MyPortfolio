@@ -110,75 +110,52 @@ projectsContainer.innerHTML = projectsData
   )
   .join("");
 
-// Initialize phone input
+// Initialize phone input with intl-tel-input
 const phoneInput = document.querySelector("#phone");
 
 if (phoneInput) {
-  // Initialize intl-tel-input with Lebanon as the initial country
   const iti = window.intlTelInput(phoneInput, {
     preferredCountries: ["lb", "fr", "us", "sa"],
     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
-    initialCountry: "lb", // Set Lebanon as the initial country (or any other preferred country)
+    initialCountry: "lb",
     separateDialCode: true,
-    nationalMode: false, // Disable national mode, so it always shows the international number
+    nationalMode: false,
   });
 
-  // Function to validate phone number
   function validatePhoneNumber() {
     const phoneNumber = phoneInput.value.trim();
     const isValid = iti.isValidNumber();
     const errorMessage = document.getElementById("phone-error");
 
     if (phoneNumber === "") {
-      // Hide error message if the input is empty
       errorMessage.textContent = "";
       phoneInput.style.borderColor = "";
     } else if (isValid) {
-      // Hide error message if the phone number is valid
       errorMessage.textContent = "";
       phoneInput.style.borderColor = "";
     } else {
-      // Show error message if the phone number is invalid
       errorMessage.textContent = "Please enter a valid phone number.";
       phoneInput.style.borderColor = "red";
+      return false;
     }
+    return true;
   }
 
-  // Event listener for input change
-  phoneInput.addEventListener("input", function () {
-    // We validate the number whenever the input is modified and it has some content
-    if (phoneInput.value.trim().length > 0) {
-      validatePhoneNumber();
-    } else {
-      // Clear error message if input is still empty
-      document.getElementById("phone-error").textContent = "";
-      phoneInput.style.borderColor = "";
-    }
-  });
-
-  // Optional: Trigger validation when form is submitted
-  document.getElementById("contact-form").addEventListener("submit", function(event) {
-    if (!validatePhoneNumber()) {
-      event.preventDefault(); // Prevent form submission if phone number is invalid
-    }
-  });
+  phoneInput.addEventListener("input", validatePhoneNumber);
 }
 
-
-
-
-// Handle the email field input clear and reset error state
+// Live validation for email input
 const emailInput = document.getElementById("email");
 const emailError = document.getElementById("email-error");
 
 emailInput.addEventListener("input", function() {
   if (emailInput.value.trim() === "") {
-    emailError.textContent = "";  // Hide error message
-    emailInput.style.borderColor = "";  // Reset the border color
+    emailError.textContent = "";
+    emailInput.style.borderColor = "";
   }
 });
 
-
+// Word count validation for message textarea
 function countWords() {
   const textarea = document.getElementById("message");
   const wordCountDisplay = document.querySelector(".word-count");
@@ -192,41 +169,101 @@ function countWords() {
   if (wordCount > 300) {
     errorDisplay.textContent = "Word limit exceeded!";
     textarea.style.borderColor = "red";
+    return false;
+  } else if (wordCount === 0) {
+    errorDisplay.textContent = "Message cannot be empty.";
+    textarea.style.borderColor = "red";
+    return false;
   } else {
     errorDisplay.textContent = "";
     textarea.style.borderColor = "";
   }
+  return true;
 }
 
+// Function to reset form fields
+function resetForm() {
+  document.getElementById("contact-form").reset();
+  document.querySelector(".word-count").textContent = "0/300 words";
+  document.getElementById("word-error").textContent = "";
+  document.getElementById("name").style.borderColor = "";
+  document.getElementById("email").style.borderColor = "";
+  document.getElementById("phone").style.borderColor = "";
+  document.getElementById("message").style.borderColor = "";
+}
 
-
-
+// Validate form before submission
 function validateForm(event) {
-  event.preventDefault(); // Prevent form submission for validation
+  event.preventDefault();
 
-  const email = document.getElementById("email");
-  const emailError = document.getElementById("email-error");
+  let isValid = true;
 
-  const emailValue = email.value.trim();
+  // Validate Name
+  const nameInput = document.getElementById("name");
+  let nameError = document.getElementById("name-error");
+  if (!nameError) {
+    nameError = document.createElement("span");
+    nameError.id = "name-error";
+    nameError.className = "error-message";
+    nameInput.parentNode.appendChild(nameError);
+  }
 
-  // Regular expression to validate email ending with .com
+  const nameValue = nameInput.value.trim();
+  if (nameValue.length < 3) {
+    nameError.textContent = "Name must be at least 3 characters long.";
+    nameError.style.color = "red";
+    nameInput.style.borderColor = "red";
+    isValid = false;
+  } else {
+    nameError.textContent = "";
+    nameInput.style.borderColor = "";
+  }
+
+  // Validate Email
+  const emailValue = emailInput.value.trim();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com)$/;
-
   if (!emailRegex.test(emailValue)) {
     emailError.textContent = "Please enter a valid email address ending with .com.";
-    email.style.borderColor = "red";  // Highlight the border in red
-    return false;  // Prevent form submission
+    emailInput.style.borderColor = "red";
+    isValid = false;
   } else {
-    emailError.textContent = "";  // Clear the error message
-    email.style.borderColor = "";  // Reset the border color
-    sendEmail();  // Call sendEmail if the email is valid
+    emailError.textContent = "";
+    emailInput.style.borderColor = "";
   }
+
+  // Validate Phone Number
+  if (phoneInput && !validatePhoneNumber()) {
+    isValid = false;
+  }
+
+  // Validate Message
+  if (!countWords()) {
+    isValid = false;
+  }
+
+  if (isValid) {
+    sendEmail();
+  }
+}
+
+// Loading effect during email sending
+function showLoading() {
+  const sendBtn = document.getElementById("send-btn");
+  sendBtn.disabled = true;
+  sendBtn.textContent = "Sending...";
+}
+
+function hideLoading() {
+  const sendBtn = document.getElementById("send-btn");
+  sendBtn.disabled = false;
+  sendBtn.textContent = "Send Message";
 }
 
 // Send email function using EmailJS
 const sendEmail = async () => {
+  showLoading();
+  
   const url = "https://api.emailjs.com/api/v1.0/email/send";
-
   const data = {
     service_id: "service_5p2nj9m",
     template_id: "elio123",
@@ -246,15 +283,39 @@ const sendEmail = async () => {
     });
 
     if (response.ok) {
-      console.log("Email sent successfully!");
       alert("Your message has been sent successfully!");
-      document.getElementById("contact-form").reset();
+      resetForm();
     } else {
-      console.error("Email sending failed:", await response.text());
       alert("Failed to send the message. Please try again.");
     }
   } catch (error) {
-    console.error("An error occurred:", error);
     alert("An error occurred while sending the message. Please try again.");
+  } finally {
+    hideLoading();
   }
 };
+
+// Attach validation and event listeners
+document.getElementById("contact-form").addEventListener("submit", validateForm);
+document.getElementById("name").addEventListener("input", function() {
+  const nameInput = document.getElementById("name");
+  let nameError = document.getElementById("name-error");
+
+  if (!nameError) {
+    nameError = document.createElement("span");
+    nameError.id = "name-error";
+    nameError.className = "error-message";
+    nameInput.parentNode.appendChild(nameError);
+  }
+
+  const nameValue = nameInput.value.trim();
+  if (nameValue.length < 3 && nameValue !== "") {
+    nameError.textContent = "Name must be at least 3 characters long.";
+    nameError.style.color = "red";
+    nameInput.style.borderColor = "red";
+  } else {
+    nameError.textContent = "";
+    nameInput.style.borderColor = "";
+  }
+});
+document.getElementById("message").addEventListener("input", countWords);

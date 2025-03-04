@@ -14,6 +14,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   line-height: 1.6;
@@ -23,18 +27,24 @@ body {
   margin: auto;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
 /* Sections */
 section,
 header {
-  padding: 5rem 5%;
   max-width: 1200px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 header {
   display: flex;
   justify-content: space-between;
-  padding: 2em 5%;
+  margin-bottom: 50px;
+  margin-top: 15px;
 }
 
 header h3 {
@@ -67,7 +77,6 @@ nav a:nth-child(3) {
   align-items: center;
   justify-content: space-between;
   background-color: var(--background-color);
-  padding-top: 3em;
 }
 
 .hero-section h1 {
@@ -114,6 +123,7 @@ nav a:nth-child(3) {
 
 .skills-section p {
   font-size: 14px;
+  margin-bottom: 20px;
   text-align: auto;
 }
 
@@ -122,7 +132,7 @@ nav a:nth-child(3) {
   justify-content: center;
   align-items: center;
   gap: 15px;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
 }
 
 .skill-icons div {
@@ -148,6 +158,9 @@ nav a:nth-child(3) {
 
 .projects-section {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 #projects-section {
@@ -168,10 +181,14 @@ nav a:nth-child(3) {
 
 #projects-container {
   display: grid;
-  margin-top: 50px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+
   justify-items: center;
+  /* display: flex;
+  gap:20px;
+  flex-wrap: wrap; */
 }
 
 .project-card {
@@ -184,7 +201,6 @@ nav a:nth-child(3) {
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
-  max-width: 350px;
 }
 
 .project-card:hover {
@@ -313,7 +329,7 @@ nav a:nth-child(3) {
   flex: 1;
   font-size: 14px;
   line-height: 1.6;
-  margin-top: 3em;
+  align-self: center;
 }
 
 /* Main Contact Section */
@@ -434,7 +450,12 @@ button:hover {
   .nav-text {
     display: none; /* Hide the text */
   }
-
+  header {
+    padding: 15px;
+  }
+  main {
+    padding: 15px;
+  }
   .hero-section {
     flex-direction: column-reverse; /* Moves image above text */
     text-align: center;
@@ -460,7 +481,7 @@ button:hover {
     display: flex;
     justify-content: center;
     gap: 15px;
-    flex-direction:column;
+    flex-direction: column;
     transition: background 0.3s ease;
   }
   .skill-icons div {

@@ -23,8 +23,8 @@
     />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="animations.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./animations.css" />
 
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -60,7 +60,7 @@
         </a>
 
         <!-- LinkedIn Link -->
-        <a href="" >
+        <a href="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -165,15 +165,12 @@
           </div>
         </div>
         <div class="image-container">
-          <img
-            src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\hero-headshot.webp"
-            alt="John's Photo"
-          />
+          <img src="./images/hero-headshot.webp" alt="John's Photo" />
         </div>
       </section>
 
       <!-- Skills Section -->
-      <section id="skills" class="skills-section fade-in ">
+      <section id="skills" class="skills-section fade-in">
         <!-- Skills content will be dynamically added -->
         <h2>Skills</h2>
         <p>
@@ -183,36 +180,16 @@
           ac code structure and user experience through real-world practice.
         </p>
         <div class="skill-icons">
-          <div>
-            <img
-              src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\html-logo.webp"
-            />HTML
-          </div>
-          <div>
-            <img
-              src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\css-logo.webp"
-            />CSS
-          </div>
-          <div>
-            <img
-              src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\javascript-logo.webp"
-            />JavaScript
-          </div>
-          <div>
-            <img
-              src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\node-logo.webp"
-            />Node.js
-          </div>
-          <div>
-            <img
-              src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\react-logo.webp"
-            />React.js
-          </div>
+          <div><img src="./images/html-logo.webp" />HTML</div>
+          <div><img src="./images/css-logo.webp" />CSS</div>
+          <div><img src="./images/javascript-logo.webp" />JavaScript</div>
+          <div><img src="./images/node-logo.webp" />Node.js</div>
+          <div><img src="./images/react-logo.webp" />React.js</div>
         </div>
       </section>
 
       <!-- Projects Section -->
-      <section id="projects" class="projects-section fade-in ">
+      <section id="projects" class="projects-section fade-in">
         <!-- Projects will be dynamically added -->
         <h2>Projects</h2>
         <p>
@@ -222,37 +199,32 @@
         <div id="projects-container"></div>
       </section>
 
-      <section id="Testimony" class="testimonial-section fade-in ">
+      <section id="Testimony" class="testimonial-section fade-in">
         <h2 class="testimonial-title">Testimony</h2>
         <div class="testimonial-content">
           <div class="profile-container">
-            <img
-              src="C:\Users\eliof\OneDrive\Desktop\MyPortfolio\MyPortfolio\images\testimony-headshot.webp"
-              alt="John Doe"
-            />
+            <img src="./images/testimony-headshot.webp" alt="John Doe" />
             <div class="profile-text">
               <strong>John Doe</strong>
               <span>Lorem ipsum dolor sit.</span>
             </div>
           </div>
-          <div class="testimonial-text">
-            <p>
-              Elio Faddoul is a dedicated and talented developer, always
-              striving for excellence. His skills in HTML, CSS, and JavaScript
-              make him a strong asset in web development. Reliable and
-              hardworking, he approaches challenges with creativity and
-              determination. Elio is eager to learn, continuously improving his
-              React knowledge and problem-solving. His attention to detail and
-              passion for coding set him apart. Professional, friendly, and
-              collaborative, he values teamwork and delivers high-quality
-              results with enthusiasm.
-            </p>
-          </div>
+
+          <p class="testimonial-text">
+            Elio Faddoul is a dedicated and talented developer, always striving
+            for excellence. His skills in HTML, CSS, and JavaScript make him a
+            strong asset in web development. Reliable and hardworking, he
+            approaches challenges with creativity and determination. Elio is
+            eager to learn, continuously improving his React knowledge and
+            problem-solving. His attention to detail and passion for coding set
+            him apart. Professional, friendly, and collaborative, he values
+            teamwork and delivers high-quality results with enthusiasm.
+          </p>
         </div>
       </section>
 
       <!-- Contact Section -->
-      <section id="contact" class="contact-section fade-in ">
+      <section id="contact" class="contact-section fade-in">
         <h2 class="contact-title">Contact</h2>
 
         <div class="contact-container">
@@ -291,7 +263,7 @@
                 <span id="word-error" class="error-message"></span>
               </div>
 
-              <button type="submit">Send Message</button>
+              <button id="send-btn" type="submit">Send Message</button>
             </form>
           </div>
         </div>
