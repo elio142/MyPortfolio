@@ -121,7 +121,9 @@ nav a:nth-child(3) {
 .skill-icons {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 15px;
+  flex-wrap:wrap;
 }
 
 .skill-icons div {
@@ -459,7 +461,7 @@ button:hover {
     display: flex;
     justify-content: center;
     gap: 15px;
-    flex-wrap: wrap; /* Allows wrapping when resizing */
+    flex-direction:column;
     transition: background 0.3s ease;
   }
   .skill-icons div {
